@@ -1,10 +1,14 @@
-#!/usr/bin/python3.11
+#!/usr/bin/python3.10
 
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import os
 import random as rand
 import cv2
+
+# Desired output:
+# image
+# annotation []
 
 fig = plt.figure(figsize=(10, 7))
 
@@ -25,5 +29,5 @@ plt.imshow(cv2.cvtColor(segm, cv2.COLOR_BGR2RGB))
 plt.axis('off')
 plt.title('segm')
 
-
 plt.show()
+print(img.shape)
