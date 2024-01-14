@@ -14,9 +14,10 @@ LESION_TYPE = {
     "df": "Dermatofibroma"
 }
 
+
 class HAM10000Dataset():
     def __init__(self, base_dir="./data", image_folder="img", metadata_folder="metadata", length=10):
-        self.base_dir = base_dir   
+        self.base_dir = base_dir
         self.image_folder = image_folder
         self.metadata_folder = metadata_folder
         self.file_list = os.listdir(f"{base_dir}/{image_folder}")
@@ -32,21 +33,21 @@ class HAM10000Dataset():
 
     def load(self):
         print("Loading dataset...")
-        for file in tqdm(self.file_list[0:10]):
+        for file in tqdm(self.file_list[0:1000]):
             image = cv2.imread(f"{self.base_dir}/{self.image_folder}/{file}")
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             metadata = self.metadata[self.metadata["image_id"] == file.split(".")[0]]
             item = {
                 "image": image,
+                "image_id": file.split(".")[0],
                 "file_name": file,
                 "lesion_type": self.get_lesion_type(metadata["dx"].values[0]),
                 "metadata": metadata.to_dict("records")[0]
             }
             self.data.append(item)
-    
+
     def get_lesion_type(self, lesion_type):
         return LESION_TYPE[lesion_type]
-        
 
 
 if __name__ == "__main__":
